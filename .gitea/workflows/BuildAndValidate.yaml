@@ -72,77 +72,86 @@ jobs:
         Write-Output "ZIP created at: $zipPath"
 
     - name: Deploy Artifact
-      if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'push' && github.ref == 'refs/heads/master') || github.event_name == 'workflow_dispatch'
+      if: >
+        (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'))
+        || github.event_name == 'workflow_dispatch'
       shell: powershell
       env:
-        GIT_COMMIT_HASH: ${{ github.sha }}
+        GIT_COMMIT_HASH:    ${{ github.sha }}
         COMMIT_MESSAGE_HEAD: ${{ github.event.head_commit.message }}
-        COMMIT_MESSAGE_PR: ${{ github.event.pull_request.title }}
+        COMMIT_MESSAGE_PR:   ${{ github.event.pull_request.title }}
+        IS_MAIN_BRANCH:      ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+        BRANCH_NAME:         ${{ github.event.pull_request.head.ref || github.ref_name }}
+        PACKAGE_NAME:        ${{ env.PACKAGENAME }}
       run: |
-       Write-Output "========== DEPLOYMENT STEP STARTED =========="
-       Write-Output "Deployment Script Initialized"
-       
-       # Log the deployment directory
-       $publishDir = "${env:PUBLISH_DIR}"
-       Write-Output "Deployment Directory: $publishDir"
-       Write-Output "Searching for ZIP artifacts in the directory..."
-       
-       # Find the ZIP artifact
-       $artifact = Get-ChildItem -Path $publishDir -Filter *.zip | Select-Object -First 1
-       
-       if (-not $artifact) {
-           Write-Error "No ZIP artifact found in '$publishDir'. Deployment cannot proceed."
-           exit 1
-       }
-       
-       # Log artifact details
-       Write-Output "ZIP Artifact Found:"
-       Write-Output "  Path: $($artifact.FullName)"
-       Write-Output "  Size: $([Math]::Round($artifact.Length / 1MB, 2)) MB"
-       Write-Output "  Last Modified: $($artifact.LastWriteTime)"
-       
-       # Resolve the commit message
-       Write-Output "Resolving Commit Message..."
-       $commitMessage = "${env:COMMIT_MESSAGE_HEAD}"
-       Write-Output "COMMIT_MESSAGE_HEAD: $commitMessage"
-       
-       if ([string]::IsNullOrWhiteSpace($commitMessage)) {
-           $commitMessage = "${env:COMMIT_MESSAGE_PR}"
-           Write-Output "COMMIT_MESSAGE_PR: $commitMessage"
-       }
-       
-       # If both environment variables are empty, try to get the last commit manually
-       if ([string]::IsNullOrWhiteSpace($commitMessage)) {
-           Write-Output "No commit message from event context, attempting to fetch from git log..."
-           $commitMessage = git log -1 --pretty=%B
-       }
-       
-       if ([string]::IsNullOrWhiteSpace($commitMessage)) {
-           $commitMessage = "Manual trigger or unknown event"
-           Write-Output "Commit Message Defaulted to: $commitMessage"
-       }
-       
-       Write-Output "Final Commit Message: $commitMessage"
-       
-       # Debugging commit hash
-       $commitHash = "${env:GIT_COMMIT_HASH}"
-       Write-Output "Debug: Commit Hash = $commitHash"
-       
-       # Define PackageName variable
-       $packageName = "${env:PACKAGENAME}"
-       Write-Output "Package Name: $packageName"
-       
-       # Logging curl path
-       $curlPath = "C:\Windows\System32\curl.exe"
-       Write-Output "Using curl executable at: $curlPath"
-       
-       # Execute curl command
-       Write-Output "Starting deployment using curl..."
-       & $curlPath --location `
-       'https://deploy.websurfingstudios.com/api/Upload/Artifact' `
-       --form "PackageName=$packageName" `
-       --form "=@$($artifact.FullName)" `
-       --form "CommitHash=$commitHash" `
-       --form "CommitMessage=$commitMessage"
-       
-       Write-Output "========== DEPLOYMENT STEP COMPLETED =========="
+        Write-Output "========== DEPLOYMENT STEP STARTED =========="
+        Write-Output "Deployment Script Initialized"
+        
+        Write-Output "Branch Name: $($env:BRANCH_NAME)"
+        Write-Output "Is Main Branch: $($env:IS_MAIN_BRANCH)"
+        
+        # Log the deployment directory
+        $publishDir = "${env:PUBLISH_DIR}"
+        Write-Output "Deployment Directory: $publishDir"
+        Write-Output "Searching for ZIP artifacts in the directory..."
+        
+        # Find the ZIP artifact
+        $artifact = Get-ChildItem -Path $publishDir -Filter *.zip | Select-Object -First 1
+        
+        if (-not $artifact) {
+            Write-Error "No ZIP artifact found in '$publishDir'. Deployment cannot proceed."
+            exit 1
+        }
+        
+        # Log artifact details
+        Write-Output "ZIP Artifact Found:"
+        Write-Output "  Path: $($artifact.FullName)"
+        Write-Output "  Size: $([Math]::Round($artifact.Length / 1MB, 2)) MB"
+        Write-Output "  Last Modified: $($artifact.LastWriteTime)"
+        
+        # Resolve the commit message
+        Write-Output "Resolving Commit Message..."
+        $commitMessage = "${env:COMMIT_MESSAGE_HEAD}"
+        Write-Output "COMMIT_MESSAGE_HEAD: $commitMessage"
+        
+        if ([string]::IsNullOrWhiteSpace($commitMessage)) {
+            $commitMessage = "${env:COMMIT_MESSAGE_PR}"
+            Write-Output "COMMIT_MESSAGE_PR: $commitMessage"
+        }
+        
+        if ([string]::IsNullOrWhiteSpace($commitMessage)) {
+            Write-Output "No commit message from event context, attempting to fetch from git log..."
+            $commitMessage = git log -1 --pretty=%B
+        }
+        
+        if ([string]::IsNullOrWhiteSpace($commitMessage)) {
+            $commitMessage = "Development Branch"
+            Write-Output "Commit Message Defaulted to: $commitMessage"
+        }
+        
+        Write-Output "Final Commit Message: $commitMessage"
+        
+        # Debugging commit hash
+        $commitHash = "${env:GIT_COMMIT_HASH}"
+        Write-Output "Debug: Commit Hash = $commitHash"
+        
+        # Define PackageName variable
+        $packageName = "${env:PACKAGE_NAME}"
+        Write-Output "Package Name: $packageName"
+        
+        # Logging curl path
+        $curlPath = "C:\Windows\System32\curl.exe"
+        Write-Output "Using curl executable at: $curlPath"
+        
+        # Execute curl command
+        Write-Output "Starting deployment using curl..."
+        & $curlPath --location `
+          'https://deploy.websurfingstudios.com/api/Upload/Artifact' `
+          --form "PackageName=$packageName" `
+          --form "=@$($artifact.FullName)" `
+          --form "CommitHash=$commitHash" `
+          --form "CommitMessage=$commitMessage" `
+          --form "IsMainBranch=$($env:IS_MAIN_BRANCH)" `
+          --form "BranchName=$($env:BRANCH_NAME)"
+        
+        Write-Output "========== DEPLOYMENT STEP COMPLETED =========="
