@@ -178,8 +178,15 @@
     <Compile Include="Migrations\202511090558533_AddOwners.Designer.cs">
       <DependentUpon>202511090558533_AddOwners.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511092230003_Added booking, pets, and the join table for them.cs" />
+    <Compile Include="Migrations\202511092230003_Added booking, pets, and the join table for them.Designer.cs">
+      <DependentUpon>202511092230003_Added booking, pets, and the join table for them.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BookingModel.cs" />
     <Compile Include="Models\OwnerModel.cs" />
+    <Compile Include="Models\PetBookingModel.cs" />
+    <Compile Include="Models\PetModel.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -304,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511090558533_AddOwners.resx">
       <DependentUpon>202511090558533_AddOwners.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511092230003_Added booking, pets, and the join table for them.resx">
+      <DependentUpon>202511092230003_Added booking, pets, and the join table for them.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
