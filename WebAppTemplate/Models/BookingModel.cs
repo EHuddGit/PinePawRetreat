@@ -21,7 +21,7 @@ namespace WebAppTemplate.Models
         public string CheckedInBy { get; set; }
         public string CheckedOutBy { get; set; }
         public List<PetBookingModel> PetBookingJoin { get; set; }
-
+        [Required]
         public OwnerModel Owner { get; set; }
 
         public BookingModel() 

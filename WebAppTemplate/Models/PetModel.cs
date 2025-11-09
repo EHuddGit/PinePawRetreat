@@ -17,7 +17,8 @@ namespace WebAppTemplate.Models
         [Required]
         public string Breed { get; set; }
         [Required]
-        public string Gender { get; set; }
+        [MaxLength (1)]
+        public string Sex { get; set; }
         [Required]
         public string Age { get; set; }
         public string Color { get; set; }

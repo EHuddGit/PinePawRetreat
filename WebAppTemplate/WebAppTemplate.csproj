@@ -182,8 +182,13 @@
     <Compile Include="Migrations\202511092230003_Added booking, pets, and the join table for them.Designer.cs">
       <DependentUpon>202511092230003_Added booking, pets, and the join table for them.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511092322053_contact model.cs" />
+    <Compile Include="Migrations\202511092322053_contact model.Designer.cs">
+      <DependentUpon>202511092322053_contact model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BookingModel.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\OwnerModel.cs" />
     <Compile Include="Models\PetBookingModel.cs" />
     <Compile Include="Models\PetModel.cs" />
@@ -314,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511092230003_Added booking, pets, and the join table for them.resx">
       <DependentUpon>202511092230003_Added booking, pets, and the join table for them.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511092322053_contact model.resx">
+      <DependentUpon>202511092322053_contact model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
