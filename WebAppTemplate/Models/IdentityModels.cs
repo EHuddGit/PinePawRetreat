@@ -20,6 +20,11 @@ namespace WebAppTemplate.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<OwnerModel> OwnerModels { get; set; }
+        public DbSet<PetModel> PetModels { get; set; }
+        public DbSet<BookingModel> BookingsModels { get; set; }
+        public DbSet<PetBookingModel> PetBookingModels { get; set; }
+        public DbSet<ContactModel> ContactModels { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
