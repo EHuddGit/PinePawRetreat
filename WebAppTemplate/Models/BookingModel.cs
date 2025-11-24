@@ -16,17 +16,18 @@ namespace WebAppTemplate.Models
         public DateTime BookingEndTime {  get; set; }
         [Required]
         public string Status { get; set; }
-        public DateTime CheckedInTime {  get; set; }
-        public DateTime CheckedOutTime { get; set; }
+        public DateTime? CheckedInTime {  get; set; }
+        public DateTime? CheckedOutTime { get; set; }
         public string CheckedInBy { get; set; }
         public string CheckedOutBy { get; set; }
-        public List<PetBookingModel> PetBookingJoin { get; set; }
+        public virtual List<PetBookingModel> PetBookingJoin { get; set; }
         [Required]
-        public OwnerModel Owner { get; set; }
+        public virtual OwnerModel Owner { get; set; }
 
         public BookingModel() 
         {
             BookingID = Guid.NewGuid();
+            //save the dates in UTC
         }
         
 

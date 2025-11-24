@@ -18,5 +18,11 @@ namespace WebAppTemplate.Models
         {
             PetBookingID = Guid.NewGuid();
         }
+
+        public PetBookingModel(PetModel pet, BookingModel booking): this()
+        {
+            Pet = pet;
+            Booking = booking;
+        }
     }
 }

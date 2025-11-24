@@ -11,7 +11,7 @@ namespace WebAppTemplate.Models
         [Key]
         public Guid PetID { get; set; }
         [Required]
-        public OwnerModel Owner { get; set; }
+        public virtual OwnerModel Owner { get; set; }
         [Required]
         public string PetName { get; set; }
         [Required]
@@ -24,7 +24,7 @@ namespace WebAppTemplate.Models
         public string Color { get; set; }
         public string DietaryRequirements { get; set; }
         public string MedicationRequirements { get; set; }
-        public List<PetBookingModel> PetBookingJoin { get; set; }
+        public virtual List<PetBookingModel> PetBookingJoin { get; set; }
 
 
 
