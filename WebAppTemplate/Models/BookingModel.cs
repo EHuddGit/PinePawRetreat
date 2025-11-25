@@ -16,8 +16,8 @@ namespace WebAppTemplate.Models
         public DateTime BookingEndTime {  get; set; }
         [Required]
         public string Status { get; set; }
-        public DateTime CheckedInTime {  get; set; }
-        public DateTime CheckedOutTime { get; set; }
+        public DateTime? CheckedInTime {  get; set; }
+        public DateTime? CheckedOutTime { get; set; }
         public string CheckedInBy { get; set; }
         public string CheckedOutBy { get; set; }
         public List<PetBookingModel> PetBookingJoin { get; set; }

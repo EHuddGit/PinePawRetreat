@@ -186,6 +186,10 @@
     <Compile Include="Migrations\202511092322053_contact model.Designer.cs">
       <DependentUpon>202511092322053_contact model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511241609316_adding nullable checktimes.cs" />
+    <Compile Include="Migrations\202511241609316_adding nullable checktimes.Designer.cs">
+      <DependentUpon>202511241609316_adding nullable checktimes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BookingModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
@@ -322,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511092322053_contact model.resx">
       <DependentUpon>202511092322053_contact model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511241609316_adding nullable checktimes.resx">
+      <DependentUpon>202511241609316_adding nullable checktimes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
