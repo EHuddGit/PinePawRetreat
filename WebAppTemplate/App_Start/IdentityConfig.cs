@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Helpers;
 using WebAppTemplate.Models;
 
 namespace WebAppTemplate
@@ -18,9 +21,35 @@ namespace WebAppTemplate
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            return SendEmailAsync(message.Destination, message.Subject, message.Body);
         }
+
+        public Task SendEmailAsync(string destination, string subject, string body)
+        {
+            MailMessage mailMessage = EmailService.GenerateMailMessage(destination, subject, body);
+            return EmailService.GetSmtpClient().SendMailAsync(mailMessage);
+        }
+
+        public static SmtpClient GetSmtpClient()
+        {
+            SmtpClient smtpClient = new SmtpClient(EmailServiceCredentials.EmailSMTPUrl);
+            smtpClient.Port = 587;
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailSMTPPasswordHash);
+
+            return smtpClient;
+        }
+        
+        public static MailMessage GenerateMailMessage(string destination, string subject, string body)
+        {
+            MailMessage mailMessage = new MailMessage(new MailAddress(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailFromName), new MailAddress(destination));
+            mailMessage.Subject = EmailServiceCredentials.EmailAppName + " - " + subject;
+            mailMessage.Body = body;
+            mailMessage.IsBodyHtml = true;
+
+            return mailMessage;
+        }
+
     }
 
     public class SmsService : IIdentityMessageService
