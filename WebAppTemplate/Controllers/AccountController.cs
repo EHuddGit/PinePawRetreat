@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.BuilderProperties;
+using Microsoft.Owin.Security;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+using System.Xml.Linq;
 using WebAppTemplate.Models;
+using static WebAppTemplate.Controllers.BookingsController;
 
 namespace WebAppTemplate.Controllers
 {
@@ -109,6 +112,7 @@ namespace WebAppTemplate.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                OwnerModel Owner = new OwnerModel();
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -119,8 +123,33 @@ namespace WebAppTemplate.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    Owner.OwnerName = model.FirstName + " " + model.LastName;
+                    Owner.OwnerPhoneNumber = model.PhoneNumber;
+                    Owner.OwnerEmail = model.Email;
+                    Owner.Address = model.Address;
+                    Owner.City = model.City;
+                    Owner.State = model.State;
+
+                    using (ApplicationDbContext dbContext = new ApplicationDbContext())
+                    {
+
+                        dbContext.OwnerModels.Add(Owner);
+                        try
+                        {
+                            dbContext.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
+
+               
+
                 AddErrors(result);
             }
 
@@ -215,6 +244,9 @@ namespace WebAppTemplate.Controllers
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
+
+
             AddErrors(result);
             return View();
         }

@@ -16,7 +16,7 @@ namespace WebAppTemplate.Controllers
         }
 
         public ActionResult CreateOwner(string Name, string phoneNumber, string ownerEmail = null, string Address = null, string City = null, string State = null)
-        {
+        { //proabably need a way to seperate this out from the action so i dont have to duplicate this create owner function in both here and registration page
             OwnerModel Owner = new OwnerModel();
 
             Owner.OwnerName = Name;
