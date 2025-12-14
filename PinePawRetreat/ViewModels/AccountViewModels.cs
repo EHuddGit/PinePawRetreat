@@ -48,6 +48,7 @@ namespace PinePawRetreat.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]
         [Phone(ErrorMessage = "Phone Number Required")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

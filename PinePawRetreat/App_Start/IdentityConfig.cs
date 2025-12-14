@@ -32,18 +32,37 @@ namespace PinePawRetreat
 
         public static SmtpClient GetSmtpClient()
         {
-            SmtpClient smtpClient = new SmtpClient(EmailServiceCredentials.EmailSMTPUrl);
-            smtpClient.Port = 587;
-            smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailSMTPPasswordHash);
+            SmtpClient smtpClient = new SmtpClient();
+            EmailServiceCredentials.Validate();
 
+            smtpClient.Host = EmailServiceCredentials.SmtpHost;
+            smtpClient.Port = EmailServiceCredentials.SmtpPort;
+            smtpClient.EnableSsl = true;
+
+            smtpClient.Credentials = new System.Net.NetworkCredential(
+                EmailServiceCredentials.SmtpUser,
+                EmailServiceCredentials.SmtpPass
+            );
             return smtpClient;
         }
-        
+
+
         public static MailMessage GenerateMailMessage(string destination, string subject, string body)
         {
-            MailMessage mailMessage = new MailMessage(new MailAddress(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailFromName), new MailAddress(destination));
-            mailMessage.Subject = EmailServiceCredentials.EmailAppName + " - " + subject;
+            EmailServiceCredentials.Validate();
+
+            if (string.IsNullOrWhiteSpace(destination))
+                throw new InvalidOperationException("Destination email is null or empty.");
+
+            var mailMessage = new MailMessage(
+                new MailAddress(
+                    EmailServiceCredentials.FromAddress,
+                    EmailServiceCredentials.FromName
+                ),
+                new MailAddress(destination)
+            );
+
+            mailMessage.Subject = $"{EmailServiceCredentials.AppName} - {subject}";
             mailMessage.Body = body;
             mailMessage.IsBodyHtml = true;
 
