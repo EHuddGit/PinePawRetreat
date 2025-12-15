@@ -1,0 +1,27 @@
+﻿@model PinePawRetreat.ViewModels.PetVM
+@{
+    ViewBag.Title = "_PetCard";
+}
+
+<div class="card w-75 mx-auto">
+    <div class="card-body d-flex align-items-start">
+        <div style="width: 180px; margin-right: 1.5rem;">
+            <img src="http://www.fillster.com/images/pictures/10p.jpg"
+                 alt="Dog"
+                 class="rounded"
+                 style="width: 100%; height: 180px; object-fit: cover;" />
+        </div>
+        <div class="flex-grow-1">
+            <div class="fw-bold fs-5 mb-1"> @Model.Name </div>
+            <div class="text-muted mb-2"> Breed: @Model.Breed · Age: @Model.Age</div>
+            <div class="mb-2">
+                <span class="badge text-bg-success">@Model.Boarding_Ready</span>
+            </div>
+            <div class="text-muted mb-3"> Next stay: @Model.NextStay</div>
+            <div class="d-flex gap-2">
+                <a href="#" class="btn btn-primary btn-sm">View Pet</a>
+                <a href="#" class="btn btn-outline-secondary btn-sm">Edit Pet</a>
+            </div>
+        </div>
+    </div>
+</div>

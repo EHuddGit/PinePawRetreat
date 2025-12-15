@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PinePawRetreat.Models;
 
 namespace PinePawRetreat.Controllers
@@ -12,9 +13,27 @@ namespace PinePawRetreat.Controllers
         // GET: Pets
         public ActionResult Index()
         {
-            return View();
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                List<ViewModels.PetVM> petVMs = new List<ViewModels.PetVM>();
+                var user = dbContext.OwnerModels.FirstOrDefault(u => u.OwnerEmail == User.Identity.GetUserName());
+                var pets = dbContext.PetModels.Where(p => p.Owner.OwnerID == user.OwnerID).ToList();
+                //need to make a query about bookings with the specific pets and add a field about being boarding ready to db
+
+                foreach(var Pet in pets)
+                {
+                    ViewModels.PetVM temp = new ViewModels.PetVM();
+                    temp.Age = Pet.Age;
+                    temp.Breed = Pet.Breed;
+                    temp.Name = Pet.PetName;
+                    temp.Boarding_Ready = "Boarding Ready";
+                    temp.NextStay = "March 12 - March 16";
+                    petVMs.Add(temp);
+                }
+            }
+                return View();
         }
-        //things for validation, make sure validation sex
+        
         public ActionResult CreatePet(string OwnerID, string Name, string Breed, string Sex, string Age = null,
             string Color = null, string DietaryReq = null, string medReq = null)
         {
