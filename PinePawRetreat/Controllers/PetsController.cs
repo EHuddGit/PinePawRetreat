@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using PinePawRetreat.Models;
+using PinePawRetreat.ViewModels;
 
 namespace PinePawRetreat.Controllers
 {
@@ -13,25 +14,41 @@ namespace PinePawRetreat.Controllers
         // GET: Pets
         public ActionResult Index()
         {
+            List<ViewModels.PetVM> petVMs = new List<ViewModels.PetVM>();
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-                List<ViewModels.PetVM> petVMs = new List<ViewModels.PetVM>();
-                var user = dbContext.OwnerModels.FirstOrDefault(u => u.OwnerEmail == User.Identity.GetUserName());
+              
+                //the lambda function is for sql only
+                string userEmail = User.Identity.GetUserName();
+                var user = dbContext.OwnerModels.FirstOrDefault(u => u.OwnerEmail == userEmail);
                 var pets = dbContext.PetModels.Where(p => p.Owner.OwnerID == user.OwnerID).ToList();
                 //need to make a query about bookings with the specific pets and add a field about being boarding ready to db
 
                 foreach(var Pet in pets)
                 {
                     ViewModels.PetVM temp = new ViewModels.PetVM();
+                    temp.petID = Pet.PetID.ToString();
                     temp.Age = Pet.Age;
                     temp.Breed = Pet.Breed;
                     temp.Name = Pet.PetName;
+                    temp.Sex = Pet.Sex;
+                    // static data, should switch it out
                     temp.Boarding_Ready = "Boarding Ready";
                     temp.NextStay = "March 12 - March 16";
                     petVMs.Add(temp);
                 }
             }
-                return View();
+                return View(petVMs);
+        }
+
+        public ActionResult EditPet(string petId)
+        {
+            return View();
+        }
+
+        public ActionResult ViewPet(string petId)
+        {
+            return View();
         }
         
         public ActionResult CreatePet(string OwnerID, string Name, string Breed, string Sex, string Age = null,

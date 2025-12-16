@@ -18,5 +18,9 @@ namespace PinePawRetreat.ViewModels
         public string NextStay { get; set; }
         [Required]
         public string Boarding_Ready { get; set; }
+        [Required]
+        public string petID { get; set; }
+        [Required]
+        public string Sex { get; set; }
     }
 }
