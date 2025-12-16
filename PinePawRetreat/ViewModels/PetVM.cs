@@ -21,6 +21,10 @@ namespace PinePawRetreat.ViewModels
         [Required]
         public string petID { get; set; }
         [Required]
+        [MaxLength(1,ErrorMessage = "Please Indicate Sex with F or M")]
         public string Sex { get; set; }
+        public string Color { get; set; }
+        public string DietaryRequirements { get; set; }
+        public string MedicationRequirements { get; set; }
     }
 }

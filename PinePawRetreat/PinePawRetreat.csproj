@@ -284,6 +284,7 @@
     <Content Include="Views\Pets\_PetCard.cshtml" />
     <Content Include="Views\Pets\ViewPet.cshtml" />
     <Content Include="Views\Pets\EditPet.cshtml" />
+    <Content Include="Views\Pets\AddPet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

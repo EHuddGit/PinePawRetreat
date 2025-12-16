@@ -50,8 +50,51 @@ namespace PinePawRetreat.Controllers
         {
             return View();
         }
-        
-        public ActionResult CreatePet(string OwnerID, string Name, string Breed, string Sex, string Age = null,
+
+        public ActionResult AddPet()
+        {
+            PetVM pet = new PetVM();
+            return View(pet);
+        }
+
+        [HttpPost]
+        public ActionResult AddPet(PetVM petVm)
+        {
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+                PetModel Pet = new PetModel();
+                string userEmail = User.Identity.GetUserName();
+                var user = dbContext.OwnerModels.FirstOrDefault(u => u.OwnerEmail == userEmail);
+                Guid OwnerGuid = user.OwnerID;
+
+                Pet.PetName = petVm.Name;
+                Pet.Breed = petVm.Breed;
+                Pet.Sex = petVm.Sex;
+                Pet.Age = petVm.Age;
+                Pet.Color = petVm.Color;
+                Pet.DietaryRequirements = petVm.DietaryRequirements;
+                Pet.MedicationRequirements = petVm.MedicationRequirements;
+                Pet.Owner = dbContext.OwnerModels.FirstOrDefault(x => x.OwnerID == OwnerGuid);
+
+                if (Pet.Owner == null)
+                    return Content("Invalid data for creating pet");
+
+                dbContext.PetModels.Add(Pet);
+                try
+                {
+                    dbContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                return Content("Owner Created: Pet Name: " + Pet.PetName + " Owner ID: " + Pet.Owner.OwnerID + " Breed: " + Pet.Breed + " Sex: " + Pet.Sex);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddPetURL(string OwnerID, string Name, string Breed, string Sex, string Age = null,
             string Color = null, string DietaryReq = null, string medReq = null)
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
