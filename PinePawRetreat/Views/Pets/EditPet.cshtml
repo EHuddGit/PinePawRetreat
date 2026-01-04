@@ -1,0 +1,60 @@
+﻿@model PinePawRetreat.ViewModels.PetVM
+@{
+    ViewBag.Title = "EditPet";
+}
+
+<h2>EditPet</h2>
+@using (Html.BeginForm("EditPet", "Pets", FormMethod.Post))
+{
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.HiddenFor(x => x.petID)
+    <div class="form-group">
+        <label>Name</label>
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Age</label>
+        @Html.TextBoxFor(x => x.Age, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Breed</label>
+        @Html.TextBoxFor(x => x.Breed, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Sex</label>
+        @Html.DropDownListFor(x => x.Sex,
+         new SelectList(new[]
+         {
+             new { Value = "", Text = "Select sex" },
+             new { Value = "M", Text = "Male" },
+             new { Value = "F", Text = "Female" }
+         }, "Value", "Text", Model.Sex),
+         new { @class = "form-control" }
+     )
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Color</label>
+        @Html.TextBoxFor(x => x.Color, new { @class = "form-control" })
+
+    </div>
+
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Dietary Requirements</label>
+        @Html.TextAreaFor(x => x.DietaryRequirements, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Medication Requirements</label>
+        @Html.TextAreaFor(x => x.MedicationRequirements, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

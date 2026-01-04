@@ -1,8 +1,30 @@
-﻿
+﻿@model List<PinePawRetreat.ViewModels.PetVM>
 @{
     ViewBag.Title = "index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>pets index page</h2>
+<body class="bg-light">
+    <div class="w-75 mx-auto">
+
+        <div class="d-flex align-items-center mb-4">
+            <div class="flex-grow-1"></div>
+
+            <h1 class="mb-0 text-center">Manage Pets</h1>
+
+            <div class="flex-grow-1 d-flex justify-content-end">
+                @Html.ActionLink("+ Add Pet","AddPet","Pets",null,new { @class = "btn btn-success btn-sm" })
+            </div>
+        </div>
+        @foreach (var pet in Model)
+        {
+            @Html.Partial("_PetCard", pet)
+        }
+    </div>
+</body>
+</html>
+
+
 
