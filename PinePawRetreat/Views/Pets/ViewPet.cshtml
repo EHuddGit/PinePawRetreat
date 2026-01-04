@@ -5,3 +5,41 @@
 
 <h2>ViewPet</h2>
 
+@model PinePawRetreat.ViewModels.PetVM
+@{
+    ViewBag.Title = "_PetCard";
+}
+
+<body>
+
+    <div class="fw-bold fs-1 mb-1 align-content-center">@Model.Name</div>
+
+    <!-- Core info -->
+    <div class="mb-2">
+        Breed: @Model.Breed · Age: @Model.Age · Sex: @Model.Sex · @Model.Color · Weight: 42 lbs
+    </div>
+    <!-- Management info -->
+    <div class=" mb-1">
+        Boarding status: Boarding Ready
+    </div>
+    <div class=" mb-1">
+        Vaccines: Up to date
+    </div>
+    <div class=" mb-1">
+        Medications: Yes
+    </div>
+    <div class=" mb-2">
+        Special care: None
+    </div>
+
+    <div class="mb-3">
+        Next stay: @Model.DietaryRequirements
+    </div>
+    <div class="mb-3">
+        Next stay: @Model.MedicationRequirements
+    </div>
+    <div class="mb-3">
+        Next stay: @Model.NextStay
+    </div>
+</body>
+

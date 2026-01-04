@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using PinePawRetreat.Models;
+using PinePawRetreat.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using PinePawRetreat.Models;
-using PinePawRetreat.ViewModels;
 
 namespace PinePawRetreat.Controllers
 {
@@ -117,7 +118,33 @@ namespace PinePawRetreat.Controllers
 
         public ActionResult ViewPet(string petId)
         {
-            return View();
+            ViewModels.PetVM pageVM = new ViewModels.PetVM();
+
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+
+                //the lambda function is for sql only
+                Guid petIdGuid = Guid.Parse(petId);
+                var pets = dbContext.PetModels.FirstOrDefault(p => p.PetID == petIdGuid);
+                if (pets == null)
+                    RedirectToAction("Index");
+
+               
+                pageVM.petID = pets.ToString();
+                pageVM.Age = pets.Age;
+                pageVM.Breed = pets.Breed;
+                pageVM.Name = pets.PetName;
+                pageVM.Sex = pets.Sex;
+                pageVM.Color = pets.Color;
+                // static data, should switch it out
+                pageVM.Boarding_Ready = "Boarding Ready";
+                pageVM.NextStay = "March 12 - March 16";
+                pageVM.DietaryRequirements = pets.DietaryRequirements;
+                pageVM.MedicationRequirements = pets.MedicationRequirements;
+               
+
+            }
+            return View(pageVM);
         }
 
         public ActionResult AddPet()
