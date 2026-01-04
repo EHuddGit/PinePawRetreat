@@ -20,16 +20,17 @@
     </div>
     <!-- Management info -->
     <div class=" mb-1">
-        Boarding status: Boarding Ready
+        Boarding status: @Model.Boarding_Ready
     </div>
     <div class=" mb-1">
+        <!-- static data, will need to fix later-->
         Vaccines: Up to date
     </div>
     <div class=" mb-1">
-        Medications: Yes
+        Medications: @Model.MedicationRequirements
     </div>
     <div class=" mb-2">
-        Special care: None
+        Dietary Notes: @Model.DietaryRequirements
     </div>
 
     <div class="mb-3">

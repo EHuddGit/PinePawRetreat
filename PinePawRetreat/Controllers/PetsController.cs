@@ -52,9 +52,10 @@ namespace PinePawRetreat.Controllers
         //change to guid later
         public ActionResult EditPet(string petId)
         {
+            if (petId == null)
+                RedirectToAction("Index");
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
-            {
-
+            {      
                 Guid petIdGuid = Guid.Parse(petId);
                 var pet = dbContext.PetModels.FirstOrDefault(p => p.PetID == petIdGuid);
                 ViewModels.PetVM temp = new ViewModels.PetVM();
@@ -85,7 +86,6 @@ namespace PinePawRetreat.Controllers
         {
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {
-
                 Guid petIdGuid = Guid.Parse(petVM.petID);
                 var pet = dbContext.PetModels.FirstOrDefault(p => p.PetID == petIdGuid);
                 if (pet == null)
@@ -119,6 +119,8 @@ namespace PinePawRetreat.Controllers
         public ActionResult ViewPet(string petId)
         {
             ViewModels.PetVM pageVM = new ViewModels.PetVM();
+            if (petId == null)
+                RedirectToAction("Index");
 
             using (ApplicationDbContext dbContext = new ApplicationDbContext())
             {

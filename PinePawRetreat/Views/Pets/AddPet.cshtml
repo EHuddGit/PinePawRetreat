@@ -5,6 +5,7 @@
 <h2>AddPet</h2>
 @using (Html.BeginForm("AddPet", "Pets", FormMethod.Post))
 {
+    @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         <label>Name</label>
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
@@ -50,6 +51,9 @@
         @Html.TextAreaFor(x => x.MedicationRequirements, new { @class = "form-control" })
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
 

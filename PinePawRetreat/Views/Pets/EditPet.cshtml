@@ -6,6 +6,7 @@
 <h2>EditPet</h2>
 @using (Html.BeginForm("EditPet", "Pets", FormMethod.Post))
 {
+    @Html.ValidationSummary("", new { @class = "text-danger" })
     @Html.HiddenFor(x => x.petID)
     <div class="form-group">
         <label>Name</label>
@@ -30,7 +31,7 @@
              new { Value = "", Text = "Select sex" },
              new { Value = "M", Text = "Male" },
              new { Value = "F", Text = "Female" }
-         }, "Value", "Text",Model.Sex),
+         }, "Value", "Text", Model.Sex),
          new { @class = "form-control" }
      )
     </div>
@@ -52,5 +53,8 @@
         @Html.TextAreaFor(x => x.MedicationRequirements, new { @class = "form-control" })
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
