@@ -9,6 +9,7 @@ using PinePawRetreat.ViewModels;
 
 namespace PinePawRetreat.Controllers
 {
+    [Authorize]
     public class PetsController : Controller
     {
         // GET: Pets
@@ -21,29 +22,97 @@ namespace PinePawRetreat.Controllers
                 //the lambda function is for sql only
                 string userEmail = User.Identity.GetUserName();
                 var user = dbContext.OwnerModels.FirstOrDefault(u => u.OwnerEmail == userEmail);
-                var pets = dbContext.PetModels.Where(p => p.Owner.OwnerID == user.OwnerID).ToList();
+                var pets = dbContext.PetModels
+                    .Include("Owner")
+                    .Where(p => p.Owner.OwnerID == user.OwnerID)
+                    .ToList();
                 //need to make a query about bookings with the specific pets and add a field about being boarding ready to db
-
-                foreach(var Pet in pets)
+                if (pets != null)
                 {
-                    ViewModels.PetVM temp = new ViewModels.PetVM();
-                    temp.petID = Pet.PetID.ToString();
-                    temp.Age = Pet.Age;
-                    temp.Breed = Pet.Breed;
-                    temp.Name = Pet.PetName;
-                    temp.Sex = Pet.Sex;
-                    // static data, should switch it out
-                    temp.Boarding_Ready = "Boarding Ready";
-                    temp.NextStay = "March 12 - March 16";
-                    petVMs.Add(temp);
+                  
+                    foreach (var Pet in pets)
+                    {
+                        ViewModels.PetVM temp = new ViewModels.PetVM();
+                        temp.petID = Pet.PetID.ToString();
+                        temp.Age = Pet.Age;
+                        temp.Breed = Pet.Breed;
+                        temp.Name = Pet.PetName;
+                        temp.Sex = Pet.Sex;
+                        // static data, should switch it out
+                        temp.Boarding_Ready = "Boarding Ready";
+                        temp.NextStay = "March 12 - March 16";
+                        petVMs.Add(temp);
+                    }
                 }
             }
                 return View(petVMs);
         }
 
+        //change to guid later
         public ActionResult EditPet(string petId)
         {
-            return View();
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+
+                Guid petIdGuid = Guid.Parse(petId);
+                var pet = dbContext.PetModels.FirstOrDefault(p => p.PetID == petIdGuid);
+                ViewModels.PetVM temp = new ViewModels.PetVM();
+                if(pet == null) 
+                {
+                    RedirectToAction("Index");
+                }   
+
+                temp.petID = pet.PetID.ToString();
+                temp.Age = pet.Age;
+                temp.Breed = pet.Breed;
+                temp.Name = pet.PetName;
+                temp.Sex = pet.Sex;
+                temp.Color = pet.Color;
+                temp.DietaryRequirements = pet.DietaryRequirements;
+                temp.MedicationRequirements = pet.MedicationRequirements;
+                // static data, should switch it out
+                temp.Boarding_Ready = "Boarding Ready";
+                temp.NextStay = "March 12 - March 16";
+
+                
+                return View(temp);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditPet(PetVM petVM)
+        {
+            using (ApplicationDbContext dbContext = new ApplicationDbContext())
+            {
+
+                Guid petIdGuid = Guid.Parse(petVM.petID);
+                var pet = dbContext.PetModels.FirstOrDefault(p => p.PetID == petIdGuid);
+                if (pet == null)
+                {
+                    RedirectToAction("Index");
+                }
+
+                pet.Age = petVM.Age;
+                pet.Breed = petVM.Breed;
+                pet.PetName = petVM.Name;
+                pet.Sex = petVM.Sex;
+                pet.Color = petVM.Color;
+                pet.DietaryRequirements = petVM.DietaryRequirements;
+                pet.MedicationRequirements = petVM.MedicationRequirements;
+
+                try
+                {
+                    dbContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+
+
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult ViewPet(string petId)

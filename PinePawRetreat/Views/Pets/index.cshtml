@@ -18,7 +18,6 @@
                 @Html.ActionLink("+ Add Pet","AddPet","Pets",null,new { @class = "btn btn-success btn-sm" })
             </div>
         </div>
-
         @foreach (var pet in Model)
         {
             @Html.Partial("_PetCard", pet)
