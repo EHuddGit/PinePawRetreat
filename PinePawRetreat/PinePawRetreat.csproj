@@ -167,6 +167,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MyAccountController.cs" />
     <Compile Include="Controllers\PetsController.cs" />
+    <Compile Include="Controllers\VaccinationsController.cs" />
     <Compile Include="EmailServiceCredentials.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -199,7 +200,9 @@
     <Compile Include="Models\OwnerModel.cs" />
     <Compile Include="Models\PetBookingModel.cs" />
     <Compile Include="Models\PetModel.cs" />
+    <Compile Include="Models\VaccinationModel.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\VaccinationVM.cs" />
     <Compile Include="ViewModels\ContactUsSubmissionVM.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -285,6 +288,8 @@
     <Content Include="Views\Pets\ViewPet.cshtml" />
     <Content Include="Views\Pets\EditPet.cshtml" />
     <Content Include="Views\Pets\AddPet.cshtml" />
+    <Content Include="Views\Vaccinations\AddVaccination.cshtml" />
+    <Content Include="Views\Vaccinations\EditVaccinations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
