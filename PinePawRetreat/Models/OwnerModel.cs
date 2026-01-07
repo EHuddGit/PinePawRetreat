@@ -20,8 +20,8 @@ namespace PinePawRetreat.Models
         [MaxLength(2)]
         public string State { get; set; }
 
-        public List<PetModel> Pets { get; set; }
-        public List<BookingModel> Bookings { get; set; }
+        public virtual List<PetModel> Pets { get; set; }
+        public virtual List<BookingModel> Bookings { get; set; }
 
         public OwnerModel ()
         {

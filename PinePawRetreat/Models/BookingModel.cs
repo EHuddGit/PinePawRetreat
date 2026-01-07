@@ -10,6 +10,11 @@ namespace PinePawRetreat.Models
     {
         [Key]
         public Guid BookingID { get; set; }
+
+        [Required]
+        public Guid OwnerID { get; set; }
+        public virtual List<PetBookingModel> PetBookingJoin { get; set; }
+        public virtual OwnerModel Owner { get; set; }
         [Required]
         public DateTime BookingStartTime {  get; set; }
         [Required]
@@ -20,9 +25,7 @@ namespace PinePawRetreat.Models
         public DateTime? CheckedOutTime { get; set; }
         public string CheckedInBy { get; set; }
         public string CheckedOutBy { get; set; }
-        public List<PetBookingModel> PetBookingJoin { get; set; }
-        [Required]
-        public OwnerModel Owner { get; set; }
+       
 
         public BookingModel() 
         {

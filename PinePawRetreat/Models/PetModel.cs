@@ -11,7 +11,9 @@ namespace PinePawRetreat.Models
         [Key]
         public Guid PetID { get; set; }
         [Required]
-        public OwnerModel Owner { get; set; }
+
+        public Guid OwnerID { get; set; }
+        public virtual OwnerModel Owner { get; set; }
         [Required]
         public string PetName { get; set; }
         [Required]
@@ -24,7 +26,7 @@ namespace PinePawRetreat.Models
         public string Color { get; set; }
         public string DietaryRequirements { get; set; }
         public string MedicationRequirements { get; set; }
-        public List<PetBookingModel> PetBookingJoin { get; set; }
+        public virtual List<PetBookingModel> PetBookingJoin { get; set; }
 
 
 
