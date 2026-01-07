@@ -11,9 +11,11 @@ namespace PinePawRetreat.Models
         [Key]
         public Guid PetBookingID { get; set; }
         [Required]
-        public PetModel Pet { get; set; }
+        public Guid PetID { get; set; }
         [Required]
-        public BookingModel Booking { get; set; }
+        public Guid BookingID { get; set; }
+        public virtual PetModel Pet { get; set; }
+        public virtual BookingModel Booking { get; set; }
         public PetBookingModel()
         {
             PetBookingID = Guid.NewGuid();
