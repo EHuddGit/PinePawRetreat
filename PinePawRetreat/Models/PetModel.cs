@@ -24,9 +24,11 @@ namespace PinePawRetreat.Models
         [Required]
         public string Age { get; set; }
         public string Color { get; set; }
+        public float Weight { get; set; }
         public string DietaryRequirements { get; set; }
         public string MedicationRequirements { get; set; }
         public virtual List<PetBookingModel> PetBookingJoin { get; set; }
+        public virtual List<VaccinationModel> Vaccinations { get; set; }
 
 
 
