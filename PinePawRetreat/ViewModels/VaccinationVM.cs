@@ -16,5 +16,6 @@ namespace PinePawRetreat.ViewModels
         [Required]
         public DateTime DateDue { get; set; }
         public string VerifiedStatus { get; set; }
+        public string petID { get; set; }
     }
 }

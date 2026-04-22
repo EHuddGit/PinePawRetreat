@@ -1,4 +1,4 @@
-﻿@model List<PinePawRetreat.ViewModels.VaccinationVM>
+﻿@model PinePawRetreat.ViewModels.ViewVaccinationsVM
 @{
     ViewBag.Title = "index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <body class="bg-light">
-    <h2>Vaccinations</h2>
     <div class="w-75 mx-auto">
 
         <div class="d-flex align-items-center mb-4">
@@ -15,19 +14,19 @@
             <h1 class="mb-0 text-center">Manage Vaccinations</h1>
 
             <div class="flex-grow-1 d-flex justify-content-end">
-                @Html.ActionLink("+ Add Vaccination", "AddVaccinations", "Vaccinations", null, new { @class = "btn btn-success btn-sm" })
+                @Html.ActionLink("+ Add Vaccination", "AddVaccinations", "Vaccinations", new {petId = Model.PetID}, new { @class = "btn btn-success btn-sm" })
             </div>
         </div>
         @{ 
 
-            if (Model.Count > 0)
+            if (Model.Vaccinations.Count > 0)
             {
-                foreach (var pet in Model)
+                foreach (var vac in Model.Vaccinations)
                 {
-                    Html.Partial("_VaccCard", pet);
+                    @Html.Partial("_VaccCard", vac);
                 }
             }
-            else 
+            else
             {<h4>No Vaccinations are on record</h4>}
        }
     </div>

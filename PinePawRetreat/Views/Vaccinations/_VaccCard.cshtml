@@ -3,22 +3,19 @@
     ViewBag.Title = "_VaccCard";
 }
 
-<h2>_VaccCard</h2>
-
 <div class="card mb-3">
     <div class="card-body">
-        <h4>this is a vaccination card</h4>
         <div class="text-muted mb-1">
-            Date Performed: @Model.VaccName
+            Vaccination Name: @Model.VaccName
         </div>
         <div class="text-muted mb-1">
-            Date Performed: @Model.DateDue
+            Expires: @Model.DateDue
         </div>
         <div class="text-muted mb-1">
             Date Performed: @Model.DatePerformed
         </div>
         <div class="text-muted mb-1">
-            Date Performed: @Model.VerifiedStatus
+            Vaccination Verification Status: @Model.VerifiedStatus
         </div>
     </div>
 </div>
