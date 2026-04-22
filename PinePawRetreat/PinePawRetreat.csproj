@@ -205,6 +205,10 @@
     <Compile Include="Migrations\202604221252239_vaccinations.Designer.cs">
       <DependentUpon>202604221252239_vaccinations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202604221349562_vaccination verifiedStatus add.cs" />
+    <Compile Include="Migrations\202604221349562_vaccination verifiedStatus add.Designer.cs">
+      <DependentUpon>202604221349562_vaccination verifiedStatus add.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -304,6 +308,7 @@
     <Content Include="Views\Vaccinations\AddVaccinations.cshtml" />
     <Content Include="Views\Vaccinations\EditVaccinations.cshtml" />
     <Content Include="Views\Vaccinations\ViewVaccinations.cshtml" />
+    <Content Include="Views\Vaccinations\_VaccCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -359,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202604221252239_vaccinations.resx">
       <DependentUpon>202604221252239_vaccinations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202604221349562_vaccination verifiedStatus add.resx">
+      <DependentUpon>202604221349562_vaccination verifiedStatus add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

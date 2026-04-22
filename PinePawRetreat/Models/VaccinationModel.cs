@@ -21,6 +21,7 @@ namespace PinePawRetreat.Models
         public DateTime DateDue { get; set; }
         public bool Verified { get; set; }
         public string VerifiedBy { get; set; }
+        public string VaccinationStatus { get; set; }
 
         public virtual PetModel Pet { get; set; }
 

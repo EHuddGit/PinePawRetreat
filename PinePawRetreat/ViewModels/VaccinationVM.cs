@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PinePawRetreat.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,17 +9,12 @@ namespace PinePawRetreat.ViewModels
 {
     public class VaccinationVM
     {
-
         [Required]
-        public string NameFirst { get; set; }
+        public VaccinationTypes VaccName { get; set; }
         [Required]
-        public string NameLast { get; set; }
+        public DateTime DatePerformed { get; set; }
         [Required]
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        [Required]
-        public string Subject { get; set; }
-        [Required]
-        public string Message { get; set; }
+        public DateTime DateDue { get; set; }
+        public string VerifiedStatus { get; set; }
     }
 }
