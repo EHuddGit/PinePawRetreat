@@ -1,0 +1,35 @@
+﻿@model PinePawRetreat.ViewModels.ViewVaccinationsVM
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<body class="bg-light">
+    <div class="w-75 mx-auto">
+
+        <div class="d-flex align-items-center mb-4">
+            <div class="flex-grow-1"></div>
+
+            <h1 class="mb-0 text-center">Manage Vaccinations</h1>
+
+            <div class="flex-grow-1 d-flex justify-content-end">
+                @Html.ActionLink("+ Add Vaccination", "AddVaccinations", "Vaccinations", new {petId = Model.PetID}, new { @class = "btn btn-success btn-sm" })
+            </div>
+        </div>
+        @{ 
+
+            if (Model.Vaccinations.Count > 0)
+            {
+                foreach (var vac in Model.Vaccinations)
+                {
+                    @Html.Partial("_VaccCard", vac);
+                }
+            }
+            else
+            {<h4>No Vaccinations are on record</h4>}
+       }
+    </div>
+</body>
+</html>
+
