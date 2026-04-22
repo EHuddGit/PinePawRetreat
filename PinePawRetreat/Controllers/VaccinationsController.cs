@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PinePawRetreat.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,14 +10,18 @@ namespace PinePawRetreat.Controllers
     public class VaccinationsController : Controller
     {
         // GET: Vaccinations
-        public ActionResult AddVaccinations()
+        public ActionResult AddVaccinations(string petId)
         {
-            return View();
+            return View((object)petId);
         }
 
         public ActionResult EditVaccinations()
         {
             return View();
+        }
+        public ActionResult ViewVaccinations(string petId)
+        {
+            return View((object)petId);
         }
 
     }

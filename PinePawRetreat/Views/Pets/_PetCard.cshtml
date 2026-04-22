@@ -32,7 +32,7 @@
         <div class="d-flex gap-2">
             @Html.ActionLink("View Pet", "ViewPet", "Pets", new { petId = Model.petID }, new { @class = "btn btn-primary btn-sm" })
             @Html.ActionLink("Edit Pet", "EditPet", "Pets", new { petId = Model.petID }, new { @class = "btn btn-outline-secondary btn-sm" })
-            @Html.ActionLink("Vaccinations", " AddVaccinations", "Vaccinations", new { petId = Model.petID }, new { @class = "btn btn-outline-secondary btn-sm" })
+            @Html.ActionLink("Vaccinations", "ViewVaccinations", "Vaccinations", new { petId = Model.petID }, new { @class = "btn btn-outline-secondary btn-sm" })
         </div>
     </div>
 </div>

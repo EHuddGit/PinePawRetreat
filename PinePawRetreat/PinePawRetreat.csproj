@@ -201,6 +201,10 @@
     <Compile Include="Migrations\202601082012456_vaccinations table.Designer.cs">
       <DependentUpon>202601082012456_vaccinations table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202604221252239_vaccinations.cs" />
+    <Compile Include="Migrations\202604221252239_vaccinations.Designer.cs">
+      <DependentUpon>202604221252239_vaccinations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -299,6 +303,7 @@
     <Content Include="Views\Pets\AddPet.cshtml" />
     <Content Include="Views\Vaccinations\AddVaccinations.cshtml" />
     <Content Include="Views\Vaccinations\EditVaccinations.cshtml" />
+    <Content Include="Views\Vaccinations\ViewVaccinations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,6 +356,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202601082012456_vaccinations table.resx">
       <DependentUpon>202601082012456_vaccinations table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202604221252239_vaccinations.resx">
+      <DependentUpon>202604221252239_vaccinations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
