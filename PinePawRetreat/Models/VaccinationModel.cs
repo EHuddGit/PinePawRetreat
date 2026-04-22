@@ -19,6 +19,9 @@ namespace PinePawRetreat.Models
         public DateTime DatePerformed { get; set; }
         [Required]
         public DateTime DateDue { get; set; }
+        public bool Verified { get; set; }
+        public string VerifiedBy { get; set; }
+
         public virtual PetModel Pet { get; set; }
 
         public VaccinationModel()

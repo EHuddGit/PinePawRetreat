@@ -297,7 +297,7 @@
     <Content Include="Views\Pets\ViewPet.cshtml" />
     <Content Include="Views\Pets\EditPet.cshtml" />
     <Content Include="Views\Pets\AddPet.cshtml" />
-    <Content Include="Views\Vaccinations\AddVaccination.cshtml" />
+    <Content Include="Views\Vaccinations\AddVaccinations.cshtml" />
     <Content Include="Views\Vaccinations\EditVaccinations.cshtml" />
   </ItemGroup>
   <ItemGroup>

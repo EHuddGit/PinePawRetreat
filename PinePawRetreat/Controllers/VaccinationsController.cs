@@ -9,9 +9,15 @@ namespace PinePawRetreat.Controllers
     public class VaccinationsController : Controller
     {
         // GET: Vaccinations
-        public ActionResult Index()
+        public ActionResult AddVaccinations()
         {
             return View();
         }
+
+        public ActionResult EditVaccinations()
+        {
+            return View();
+        }
+
     }
 }
